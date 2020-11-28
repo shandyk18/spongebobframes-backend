@@ -1,13 +1,16 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const port = 5000
+
+app.use(cors())
 
 app.get('/', (req, res) => {
   res.send('Spongebob frames!')
 })
 
 app.get('/frame/:id', (req, res) => {
-    res.send('frame id: ' + req.params.id)
+    res.send(req.params.id)
 })
 
 app.listen(port, () => {
