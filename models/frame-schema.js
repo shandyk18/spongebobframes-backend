@@ -3,13 +3,15 @@ const Schema = mongoose.Schema;
 
 let frameSchema = new Schema({
     frameId: {
-        type: Number
+        type: Number,
+        required: true
     },
     image: {
-        type: String
+        type: String,
+        required: true
     }
 }, {
     collection: 'frames'
-})
+});
 
-module.exports = mongoose.model('Frame', frameSchema)
+module.exports = mongoose.model('Frame', frameSchema);
