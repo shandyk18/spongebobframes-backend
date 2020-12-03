@@ -2,8 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Frame = require('../models/frame-schema');
 
-router.get('/:id', (req, res) => {
-    res.send(req.params.id)
+router.get('/:id', async (req, res) => {
+    try {
+        const img = await Frame.find({ frameId: req.params.id} );
+        res.json(img);
+    } catch(err) {
+        res.json({message: err});
+    }
 });
 
 router.get('/', async (req, res) => {
@@ -31,13 +36,3 @@ router.post('/', async (req, res) => {
 })
 
 module.exports = router;
-
-// router.route('/frame/:id').get((req, res) => {
-//     frame.findById(req.params.id, (error, data) => {
-//         if (error) {
-//             return next(error)
-//         } else {
-//             res.json(data)
-//         }
-//     })
-// });
