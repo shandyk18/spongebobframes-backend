@@ -2,9 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Frame = require('../models/frame-schema');
 
-router.get('/:id', async (req, res) => {
+router.get('/:season/:episode/:frame', async (req, res) => {
     try {
-        const img = await Frame.find({ frameId: req.params.id} );
+        const img = await Frame.find({
+            season: req.params.season,
+            episode: req.params.episode,
+            frame: req.params.frame,
+        });
         res.json(img);
     } catch(err) {
         res.json({message: err});

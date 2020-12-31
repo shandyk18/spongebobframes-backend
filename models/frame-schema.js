@@ -2,7 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let frameSchema = new Schema({
-    frameId: {
+    season: {
+        type: Number,
+        required: true
+    },
+    episode: {
+        type: Number,
+        required: true
+    },
+    frame: {
         type: Number,
         required: true
     },
