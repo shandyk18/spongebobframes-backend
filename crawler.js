@@ -1,4 +1,14 @@
-const puppeteer = require('puppeteer')
+const puppeteer = require('puppeteer');
+const fs = require('fs');
+const request = require('request');
+
+function download(uri, filename) {
+	return new Promise((resolve, reject) => {
+		request.head(uri, function (err, res, body) {
+			request(uri).pipe(fs.createWriteStream(filename)).on('close', resolve);
+		});
+	});
+}
 
 async function getVisual() {
 	try {
@@ -7,11 +17,14 @@ async function getVisual() {
 		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
 
-        await page.goto(URL);
-        await page.mouse.click(0, 0, { button: 'left' });
-		await page.screenshot({ path: 'screenshot.png' });
-		//await page.pdf({ path: 'page.pdf' });
-
+		await page.goto(URL);
+		await page.mainFrame().waitForTimeout(1000);
+		await page.mouse.click(50, 100, { button: 'left' });
+		await page.mainFrame().waitForTimeout(1000);
+		const imageUrl = await page.evaluate(
+			() => document.querySelector('img[data-visualcompletion="media-vc-image"]')
+		);
+		//await download(imageUrl, 'image.jpeg');
 		await browser.close();
 	} catch (error) {
 		console.error(error);
