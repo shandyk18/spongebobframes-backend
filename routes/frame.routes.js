@@ -26,7 +26,9 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const post = new Frame({
-        frameId: req.body.frameId,
+        season: req.body.season,
+        episode: req.body.episode,
+        frame: req.body.frameId,
         image: req.body.image
     });
 
